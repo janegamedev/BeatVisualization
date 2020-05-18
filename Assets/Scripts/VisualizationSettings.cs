@@ -11,6 +11,7 @@ public struct VisualizationSettings
     public GameObject lineRendererPrefab;
     public Material material;
     public VisualizationMode visualizationMode;
+    public FFTWindow window;
     
     #endregion
 

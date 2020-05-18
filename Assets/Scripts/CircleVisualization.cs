@@ -50,17 +50,9 @@ public class CircleVisualization : Visualizator
 
             Vector3 changedY = direction * maxRadius;
 
-            if(i == _circlePositions.Length - 1)
-            {
-                _circleRenderer.SetPosition(i, _circlePositions[0]);
-            } 
-            else 
-            {
-                _circleRenderer.SetPosition(i, changedY);
-            }
+            _circleRenderer.SetPosition(i, i == _circlePositions.Length - 1 ? _circlePositions[0] : changedY);
 
             _circlePositions[i] = _circleRenderer.GetPosition(i);
-
         }
     }
 }

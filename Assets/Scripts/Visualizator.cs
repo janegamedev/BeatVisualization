@@ -1,5 +1,7 @@
 using UnityEngine;
 
+
+// This is base class for modes 
 [RequireComponent(typeof(LineRenderer))]
 public class Visualizator : MonoBehaviour
 {
@@ -10,8 +12,8 @@ public class Visualizator : MonoBehaviour
     private protected int segments;
     private protected GameObject lineRendererPrefab;
     private protected Material material;
-
     private protected AudioVisualizationController audioVisualizationController;
+    
     #endregion
     
     private protected float[] lineScales;

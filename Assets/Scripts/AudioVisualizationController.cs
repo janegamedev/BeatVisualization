@@ -34,6 +34,7 @@ public class AudioVisualizationController : MonoBehaviour
         _samples = new float[1024];
         _spectrum = new float[1024];
 
+        // this will add mode component which will be responsible for init and update depends on visualizing mode
         switch (settings.visualizationMode)
         {
             case VisualizationMode.RING:
@@ -52,6 +53,7 @@ public class AudioVisualizationController : MonoBehaviour
                 throw new ArgumentOutOfRangeException();
         }
         
+        // calling initialization for current mode
         _currentVisualization.Initialize(settings);
     }
     
@@ -64,16 +66,15 @@ public class AudioVisualizationController : MonoBehaviour
     
     private void AnalyzeAudio()
     {
-        //getting output data
+        // fill array with samples
         _audioSource.GetOutputData(_samples, 0);
         
-        //getting spectrum data
-        _audioSource.GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
+        // get sound spectrum
+        _audioSource.GetSpectrumData(_spectrum, 0, settings.window);
     }
 
     private void CalculateLineScales()
     {
-        
         int spectralIndex = 0;
      
         //calculating average size
