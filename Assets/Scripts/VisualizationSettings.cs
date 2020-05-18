@@ -24,12 +24,23 @@ public struct VisualizationSettings
     
     #region RING
     
+    [Header("Ring settings: ")]
     public float minimumRadius;
     
+    #endregion
+
+    #region LINE
+
+    [Header("Line settings: ")] 
+    public Vector2 offset;
+
     #endregion
 }
 
 public enum VisualizationMode
 {
-    RING
+    RING,
+    LINE,
+    DOUBLE_LINE,
+    CIRCLE
 }

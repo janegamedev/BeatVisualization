@@ -369,12 +369,13 @@ MonoBehaviour:
     segments: 50
     lineRendererPrefab: {fileID: 4997131616196450550, guid: 039532a14b555ff4eb3cac581dd518a9,
       type: 3}
-    material: {fileID: 2100000, guid: f64feb7b828a8164f840080a25d4232d, type: 2}
+    material: {fileID: 2100000, guid: 2b20100f743ec56408f90ee986436ba2, type: 2}
     visualizationMode: 0
     sampledPercentage: 0.01
     lineMultiplier: 300
     smoothingSpeed: 50
     minimumRadius: 10
+    offset: {x: 0, y: 20}
 --- !u!1 &1644076492
 GameObject:
   m_ObjectHideFlags: 0

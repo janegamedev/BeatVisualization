@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class RingVisualization : Visualizator
 {
     #region INIt
@@ -22,15 +23,7 @@ public class RingVisualization : Visualizator
         
         for (int i = 0; i < lines.Length; i++)
         {
-            GameObject go = Instantiate(lineRendererPrefab);
-            go.transform.position = Vector3.zero;
-
-            LineRenderer line = go.GetComponent<LineRenderer>();
-            line.sharedMaterial = material;
-
-            line.positionCount = 2;
-            line.useWorldSpace = true;
-            lines[i] = line;
+            lines[i] = LineSpawner.Initialize(lineRendererPrefab, material);
         }
 
         _currentRadius = _minimumRadius;
@@ -54,10 +47,9 @@ public class RingVisualization : Visualizator
             
             lines[i].startWidth = Spacing(_currentRadius);
             lines[i].endWidth = Spacing(maxRadius);
-            
-            lines[i].startColor = VisualizationDisplay.GetColor(0);
-            lines[i].endColor =  VisualizationDisplay.GetColor((lineScales[i] - 1) / (maximumScale - 1f));
         }
+        
+        UpdateColors(lines);
     }
     
     

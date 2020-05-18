@@ -44,6 +44,15 @@ public class AudioVisualizationController : MonoBehaviour
             case VisualizationMode.RING:
                 _currentVisualization = gameObject.AddComponent<RingVisualization>();
                 break;
+            case VisualizationMode.LINE:
+                _currentVisualization = gameObject.AddComponent<LineVisualization>();
+                break;
+            case VisualizationMode.DOUBLE_LINE:
+                _currentVisualization = gameObject.AddComponent<DoubleLineVisualization>();
+                break;
+            case VisualizationMode.CIRCLE:
+                _currentVisualization = gameObject.AddComponent<CircleVisualization>();
+                break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
