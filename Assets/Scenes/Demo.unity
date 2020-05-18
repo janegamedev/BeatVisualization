@@ -265,7 +265,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f6be73063dbfc014f8abc8cf70806d0d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 7b9982a9ed452db4f91608052c224bdc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -365,17 +365,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings:
     bufferAreaSize: 2
-    maximumScale: 25
-    segments: 50
+    maximumScale: 20
+    segments: 10
     lineRendererPrefab: {fileID: 4997131616196450550, guid: 039532a14b555ff4eb3cac581dd518a9,
       type: 3}
     material: {fileID: 2100000, guid: 2b20100f743ec56408f90ee986436ba2, type: 2}
-    visualizationMode: 3
+    visualizationMode: 0
     window: 5
-    sampledPercentage: 0.01
+    sampledPercentage: 0.05
     lineMultiplier: 300
     smoothingSpeed: 50
-    minimumRadius: 10
+    minimumRadius: 5
     offset: {x: 0, y: 20}
 --- !u!1 &1644076492
 GameObject:
@@ -430,7 +430,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 30
+  orthographic size: 35
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

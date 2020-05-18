@@ -75,8 +75,6 @@ public class AudioVisualizationController : MonoBehaviour
 
     private void CalculateLineScales()
     {
-        int spectralIndex = 0;
-     
         //calculating average size
         int averageSize =(int) Mathf.Abs(_samples.Length * settings.sampledPercentage);
         averageSize /= settings.segments;
@@ -87,18 +85,18 @@ public class AudioVisualizationController : MonoBehaviour
             averageSize = 1;
         }
         
+        int spectralIndex = 0;
+        
         for (int i = 0; i < settings.segments; i++)
         {
-            int a = 0;
             float sum = 0;
-            
-            while(a < averageSize)
+
+            for (int j = 0; j < averageSize; j++)
             {
                 sum += _spectrum[spectralIndex];
                 spectralIndex++;
-                a++;
             }
-        
+
             //calculating scale
             float yScale = sum / averageSize * settings.lineMultiplier;
             
@@ -107,15 +105,7 @@ public class AudioVisualizationController : MonoBehaviour
         
             
             //this will limit scale with bottom and top range
-            if(_lineScales[i] < yScale)
-            {
-                _lineScales[i] = yScale;
-            }
-        
-            if(_lineScales[i] > settings.maximumScale)
-            {
-                _lineScales[i] = settings.maximumScale;
-            }
+            _lineScales[i] = Mathf.Clamp(_lineScales[i], yScale, settings.maximumScale);
         }
     }
     
