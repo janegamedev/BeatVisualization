@@ -9,11 +9,6 @@ public class AudioVisualizationController : MonoBehaviour
     
     #region CALCULATED
     
-    private float _averagePower;
-    private float _db;
-    private float _pitch;
-
-    private float _sampleRate;
     private float[] _samples;
     private float[] _spectrum;
     private float[] _lineScales;
@@ -34,8 +29,8 @@ public class AudioVisualizationController : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
         _visualizationDisplay = GetComponent<VisualizationDisplay>();
-        _sampleRate = AudioSettings.outputSampleRate;
-        
+
+        //setting arrays size to 1024
         _samples = new float[1024];
         _spectrum = new float[1024];
 
@@ -66,81 +61,61 @@ public class AudioVisualizationController : MonoBehaviour
         CalculateLineScales();
         _currentVisualization.UpdateVisualization();
     }
+    
+    private void AnalyzeAudio()
+    {
+        //getting output data
+        _audioSource.GetOutputData(_samples, 0);
+        
+        //getting spectrum data
+        _audioSource.GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
+    }
 
     private void CalculateLineScales()
     {
-        int index = 0;
+        
         int spectralIndex = 0;
      
+        //calculating average size
         int averageSize =(int) Mathf.Abs(_samples.Length * settings.sampledPercentage);
         averageSize /= settings.segments;
+        
+        //limit size
         if(averageSize < 1)
         {
             averageSize = 1;
         }
-
-        while(index < settings.segments)
+        
+        for (int i = 0; i < settings.segments; i++)
         {
-            int i = 0;
+            int a = 0;
             float sum = 0;
-            while(i < averageSize)
+            
+            while(a < averageSize)
             {
                 sum += _spectrum[spectralIndex];
                 spectralIndex++;
-                i++;
+                a++;
             }
         
+            //calculating scale
             float yScale = sum / averageSize * settings.lineMultiplier;
-            _lineScales[index] -= Time.deltaTime * settings.smoothingSpeed;
+            
+            //smooth returning
+            _lineScales[i] -= Time.deltaTime * settings.smoothingSpeed;
         
-            if(_lineScales[index] < yScale)
+            
+            //this will limit scale with bottom and top range
+            if(_lineScales[i] < yScale)
             {
-                _lineScales[index] = yScale;
+                _lineScales[i] = yScale;
             }
         
-            if(_lineScales[index] > settings.maximumScale)
+            if(_lineScales[i] > settings.maximumScale)
             {
-                _lineScales[index] = settings.maximumScale;
+                _lineScales[i] = settings.maximumScale;
             }
-            index++;
         }
-                
-    }
-
-    private void AnalyzeAudio()
-    {
-        _audioSource.GetOutputData(_samples, 0);
-        
-        float sum = _samples.Sum(t => t * t);
-
-        _averagePower = Mathf.Sqrt(sum / _samples.Length);
-        _db = 20 * Mathf.Log10(_averagePower * 0.1f);
-
-        _audioSource.GetSpectrumData(_spectrum, 0, FFTWindow.BlackmanHarris);
-        
-        float maxV = 0;
-        int maxN = 0;
-
-        for (int i = 0; i < _samples.Length; i++)
-        {
-            if (!(_spectrum[i] > maxV) || !(_spectrum[i] > .0f))
-            {
-                continue;
-            }
-
-            maxV = _spectrum[i];
-            maxN = i;
-        }
-
-        float frequenceN = maxN;
-        if (maxN > 0 && maxN < _samples.Length - 1)
-        {
-            float dl = _spectrum[maxN - 1] / _spectrum[maxN];
-            float dr = _spectrum[maxN + 1] / _spectrum[maxN];
-            frequenceN += .5f * (dr * dr - dl * dl);
-        }
-
-        _pitch = frequenceN * (_sampleRate / 2) / _samples.Length;
     }
     
     //this event will be called every time a beat is detected.
